@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 const campGrounds = [
     {
@@ -22,12 +23,33 @@ const campGrounds = [
 
 app.set('view engine', 'pug');
 
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.get('/', (req, res) => {
     res.render('landing');
 });
 
+app.get('/campgrounds/new', (req, res) => {
+    res.render('new.pug');
+});
+
 app.get('/campgrounds', (req, res) => {
     res.render('campgrounds', {campGrounds: campGrounds});
+});
+
+app.post('/campgrounds', (req, res) => {
+    // get data from form and add to campgrounds array
+    // then redirect to campgrounds page
+    let campGroundName = req.body.name;
+    let campGroundImage = req.body.image;
+    var newCampGround = {
+        'name': campGroundName,
+        'image': campGroundImage
+    }
+
+    campGrounds.push(newCampGround);
+
+    res.redirect('/campgrounds');
 });
 
 app.listen(3000, (req, res) => console.log('YelpCamp is running'));
