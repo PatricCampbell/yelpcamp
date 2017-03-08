@@ -1,8 +1,19 @@
 include partials/header
 
-h1 This is the campgrounds page
-ul
-    each campGround in campGrounds
-        div
-            h4= campGround.name
-            img(src=campGround.image)
+div.container
+    header.jumbotron
+        div.container
+            h1 Welcome to YelpCamp!
+            p View our hand-picked campgrounds from all over the world
+            p
+                a.btn.btn-primary.btn-large(href='/campgrounds/new') Add new campground
+    div.row
+        div.col-lg-12
+            h3 Our most popular Campgrounds!
+    div.row(style='display:flex; flex-wrap: wrap;')
+        each campGround in campGrounds
+            div.col-md-3.col-sm-6
+                div.thumbnail
+                    img(src=campGround.image)
+                    div.caption.text-center
+                        h4= campGround.name
