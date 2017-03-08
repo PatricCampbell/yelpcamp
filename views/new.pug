@@ -1,7 +1,14 @@
 include partials/header
 
-h1 Create a new campground
-form(action='/campgrounds' method='POST')
-    input(type='text' placeholder='name' name='name')
-    input(type='text' placeholder='image-url' name='image')
-    button Submit
+div.container
+    div.row
+        h1(style='text-align: center;') Create a new campground
+        div(style='width: 30%; margin: 30px auto;')
+            form(action='/campgrounds' method='POST')
+                div.form-group
+                    input.form-control(type='text' placeholder='name' name='name')
+                div.form-group
+                    input.form-control(type='text' placeholder='image-url' name='image')
+                div.form-group
+                    button.btn.btn-lg.btn-primary.btn-block Submit
+            a(href='/campgrounds') Go Back
