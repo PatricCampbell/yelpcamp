@@ -10,10 +10,12 @@ div.container
     div.row
         div.col-lg-12
             h3 Our most popular Campgrounds!
-    div.row(style='display:flex; flex-wrap: wrap;')
+    div.row.text-center(style='display:flex; flex-wrap: wrap;')
         each campground in campgrounds
             div.col-md-3.col-sm-6
                 div.thumbnail
                     img(src=campground.image)
                     div.caption.text-center
                         h4= campground.name
+                    p
+                        a.btn.btn-primary(href='/campgrounds/' + campground._id) More Info
