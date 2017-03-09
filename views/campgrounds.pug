@@ -11,9 +11,9 @@ div.container
         div.col-lg-12
             h3 Our most popular Campgrounds!
     div.row(style='display:flex; flex-wrap: wrap;')
-        each campGround in campGrounds
+        each campground in campgrounds
             div.col-md-3.col-sm-6
                 div.thumbnail
-                    img(src=campGround.image)
+                    img(src=campground.image)
                     div.caption.text-center
-                        h4= campGround.name
+                        h4= campground.name
