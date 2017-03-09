@@ -51,14 +51,21 @@ app.post('/campgrounds', (req, res) => {
     // then redirect to campgrounds page
     let campgroundName = req.body.name;
     let campgroundImage = req.body.image;
-    var newgampground = {
+    let newCampground = {
         'name': campgroundName,
         'image': campgroundImage
     }
 
-    campgrounds.push(newCampground);
-
-    res.redirect('/campgrounds');
+    //Create a new campground and save to mongodb
+    Campground.create(newCampground, (err, campground) => {
+        if(err) {
+            console.log(err);
+        } else {
+            console.log('new campground created:');
+            console.log(campground);
+            res.redirect('/campgrounds');     
+        }
+    });
 });
 
 app.listen(3000, (req, res) => console.log('YelpCamp is running'));
