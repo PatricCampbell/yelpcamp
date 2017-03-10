@@ -9,6 +9,7 @@ const express     = require('express'),
 mongoose.connect('mongodb://localhost/yelp_camp');
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/public'));
 seedDB();
 
 // Landing page route
