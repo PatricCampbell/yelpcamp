@@ -5,10 +5,10 @@ const express     = require('express'),
       Campground  = require('./models/campground'),
       seedDB      = require('./seeds');
 
-seedDB();      
 mongoose.connect('mongodb://localhost/yelp_camp');
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({extended: true}));
+seedDB();
 
 // Landing page route
 app.get('/', (req, res) => {
@@ -22,7 +22,7 @@ app.get('/campgrounds', (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render('index', {campgrounds: allCampgrounds});
+            res.render('campgrounds/index', {campgrounds: allCampgrounds});
         }
     });
 });
@@ -55,7 +55,7 @@ app.post('/campgrounds', (req, res) => {
 
 // New route, show form to create new campground
 app.get('/campgrounds/new', (req, res) => {
-    res.render('new.pug');
+    res.render('campgrounds/new.pug');
 });
 
 // Show route, view more information on campground
@@ -67,9 +67,23 @@ app.get('/campgrounds/:id', (req, res) => {
             console.log(err);
         } else {
             // render show template with that campground            
-            res.render('show', {campground: foundCampground});
+            res.render('campgrounds/show', {campground: foundCampground});
         }
     });
 });
+
+// ================
+// Comments routes
+// ================
+
+app.get('/campgrounds/:id/comments/new', (req, res) => {
+    res.render('comments/new');
+});
+
+app.post('/campgrounds/:id/comments', (req, res) => {
+    res.send('This will be the new comment route');
+});
+
+
 
 app.listen(3000, (req, res) => console.log('YelpCamp is running'));
