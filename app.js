@@ -1,38 +1,17 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-
+const express     = require('express'),
+      app         = express(),
+      bodyParser  = require('body-parser'),
+      mongoose    = require('mongoose'),
+      Campground  = require('./models/campground');
+      
 mongoose.connect('mongodb://localhost/yelp_camp');
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Schema setup
-const campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
-});
-var Campground = mongoose.model('Campground', campgroundSchema);
-
+// Landing page route
 app.get('/', (req, res) => {
     res.render('landing');
 });
-
-// Campground.create(
-//     {
-//         name: 'Granite Hill',
-//         image: 'https://farm3.staticflickr.com/2353/2069978635_2eb8b33cd4.jpg',
-//         description: 'This is a huge granite hill, no bathrooms. No water. Beautiful granite.'
-// },
-//     (err, campground) => {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log('New campground created:');
-//             console.log(campground);
-//         }
-//     });
 
 // Index route, show all camgrounds
 app.get('/campgrounds', (req, res) => {
