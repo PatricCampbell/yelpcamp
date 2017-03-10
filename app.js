@@ -3,6 +3,7 @@ const express     = require('express'),
       bodyParser  = require('body-parser'),
       mongoose    = require('mongoose'),
       Campground  = require('./models/campground'),
+      Comment     = require('./models/comment'),
       seedDB      = require('./seeds');
 
 mongoose.connect('mongodb://localhost/yelp_camp');
@@ -61,8 +62,8 @@ app.get('/campgrounds/new', (req, res) => {
 // Show route, view more information on campground
 app.get('/campgrounds/:id', (req, res) => {
     // find the campground with provided ID
-    let campgroundID = req.params.id;    
-    Campground.findById(campgroundID).populate('comments').exec( (err, foundCampground) => {
+    let campgroundId = req.params.id;    
+    Campground.findById(campgroundId).populate('comments').exec( (err, foundCampground) => {
         if(err) {
             console.log(err);
         } else {
@@ -76,12 +77,41 @@ app.get('/campgrounds/:id', (req, res) => {
 // Comments routes
 // ================
 
+// New route
 app.get('/campgrounds/:id/comments/new', (req, res) => {
-    res.render('comments/new');
+    //find campground by id
+    let campgroundId = req.params.id;
+    Campground.findById(campgroundId, (err, foundCampground) => {
+        if (err) {
+            console.log(err);
+        } else {
+            //render new comment template with info from campground
+            res.render('comments/new', {campground: foundCampground});            
+        }
+    })
 });
 
+// Add route
 app.post('/campgrounds/:id/comments', (req, res) => {
-    res.send('This will be the new comment route');
+    let campgroundId = req.params.id;
+    let commentData = req.body.comment;
+
+    Campground.findById(campgroundId, (err, campground) => {
+        if (err) {
+            console.log(err);
+            res.redirect('/campgrounds');
+        } else {
+            Comment.create(commentData, (err, comment) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    campground.comments.push(comment);
+                    campground.save();
+                    res.redirect('/campgrounds/' + campgroundId);
+                }
+            })
+        }
+    })
 });
 
 
