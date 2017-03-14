@@ -16,6 +16,7 @@ div.container
                     h4
                         a= campground.name
                     p= campground.description
+                    p= 'Submitted by: ' + campground.author.username
             div.well
                 div.text-right
                     a.btn.btn-success(href='/campgrounds/' + campground._id + '/comments/new') Add New Comment

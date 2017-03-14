@@ -16,17 +16,22 @@ router.get('/', (req, res) => {
 });
 
 // Create route, add new campground to DB
-router.post('/', (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
     // get data from form and add to DB
     // then redirect to campgrounds page
     let campgroundName = req.body.name;
     let campgroundImage = req.body.image;
     let campgroundDesc = req.body.description;
+    let author = {
+        id: req.user._id,
+        username: req.user.username
+    }
 
     let newCampground = {
         'name': campgroundName,
         'image': campgroundImage,
-        'description': campgroundDesc
+        'description': campgroundDesc,
+        'author': author
     }
 
     //Create a new campground and save to mongodb
@@ -42,7 +47,7 @@ router.post('/', (req, res) => {
 });
 
 // New route, show form to create new campground
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('campgrounds/new.pug');
 });
 
