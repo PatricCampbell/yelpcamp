@@ -47,6 +47,51 @@ router.post('/', isLoggedIn, (req, res) => {
     })
 });
 
+// edit route
+router.get('/:comment_id/edit', (req, res) => {
+    let campgroundId = req.params.id;
+    let commentId = req.params.comment_id;
+
+    Comment.findById(commentId, (err, foundComment) => {
+        if (err) {
+            res.redirect('back');
+        } else {
+                res.render('comments/edit', {campgroundId: campgroundId,
+                comment: foundComment});
+        }
+    })
+});
+
+// update route
+router.put('/:comment_id', (req, res) => {
+    let commentId = req.params.comment_id;
+    let campgroundId = req.params.id;
+    let editedComment = req.body.comment;
+
+    Comment.findByIdAndUpdate(commentId, editedComment, (err, updatedComment) => {
+        if (err) {
+            res.redirect('back');
+        } else {
+            res.redirect('/campgrounds/' + campgroundId);
+        }
+    })
+});
+
+// destroy route
+router.delete('/:comment_id', (req, res) => {
+    let commentId = req.params.comment_id;
+    let campgroundId = req.params.id;
+    
+    Comment.findByIdAndRemove(commentId, (err) => {
+        if (err) {
+            res.redirect('back');
+        } else {
+            res.redirect('/campgrounds/' + campgroundId);
+        }
+    })
+});
+
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
