@@ -42,13 +42,13 @@ router.post('/', isLoggedIn, (req, res) => {
                     campground.save();
                     res.redirect('/campgrounds/' + campgroundId);
                 }
-            })
+            });
         }
     })
 });
 
 // edit route
-router.get('/:comment_id/edit', (req, res) => {
+router.get('/:comment_id/edit', checkCommentOwnership, (req, res) => {
     let campgroundId = req.params.id;
     let commentId = req.params.comment_id;
 
@@ -59,11 +59,11 @@ router.get('/:comment_id/edit', (req, res) => {
                 res.render('comments/edit', {campgroundId: campgroundId,
                 comment: foundComment});
         }
-    })
+    });
 });
 
 // update route
-router.put('/:comment_id', (req, res) => {
+router.put('/:comment_id', checkCommentOwnership, (req, res) => {
     let commentId = req.params.comment_id;
     let campgroundId = req.params.id;
     let editedComment = req.body.comment;
@@ -74,11 +74,11 @@ router.put('/:comment_id', (req, res) => {
         } else {
             res.redirect('/campgrounds/' + campgroundId);
         }
-    })
+    });
 });
 
 // destroy route
-router.delete('/:comment_id', (req, res) => {
+router.delete('/:comment_id', checkCommentOwnership, (req, res) => {
     let commentId = req.params.comment_id;
     let campgroundId = req.params.id;
     
@@ -88,7 +88,7 @@ router.delete('/:comment_id', (req, res) => {
         } else {
             res.redirect('/campgrounds/' + campgroundId);
         }
-    })
+    });
 });
 
 
@@ -98,6 +98,31 @@ function isLoggedIn(req, res, next) {
     }
     else {
         return res.redirect('/login');
+    }
+}
+
+function checkCommentOwnership(req, res, next) {
+    let commentId = req.params.comment_id;
+
+     if (req.isAuthenticated()) {        
+        Comment.findById(commentId, (err, foundComment) => {
+            if (err) {
+                console.log(err);
+                res.redirect('back');
+            } else {
+                // does user own comment?   
+                let author = foundComment.author.id   
+                let userId = req.user._id;     
+
+                if (author.equals(userId)) {
+                    next();
+                } else {
+                    res.redirect('back');
+                }
+            }
+        })
+    } else {
+        res.redirect('back');
     }
 }
 
