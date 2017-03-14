@@ -1,0 +1,16 @@
+include ../partials/header
+
+div.container
+    div.row
+        h1(style='text-align: center;')= 'Edit ' + campground.name
+        div(style='width: 30%; margin: 30px auto;')
+            form(action='/campgrounds/' + campground._id + '?_method=PUT' method='POST')
+                div.form-group
+                    input.form-control(type='text' value=campground.name name='campground[name]')
+                div.form-group
+                    input.form-control(type='text' value=campground.image name='campground[image]')
+                div.form-group
+                    input.form-control(type='text' value=campground.description name='campground[description]')
+                div.form-group
+                    button.btn.btn-lg.btn-primary.btn-block Submit
+            a(href='/campgrounds') Go Back

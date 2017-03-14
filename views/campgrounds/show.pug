@@ -17,6 +17,9 @@ div.container
                         a= campground.name
                     p= campground.description
                     p= 'Submitted by: ' + campground.author.username
+                    a.btn.btn-warning(href='/campgrounds/' + campground._id + '/edit') Edit Campground
+                    form(method='POST' action='/campgrounds/' + campground._id + '?_method=DELETE')
+                        button.btn.btn-danger Delete Campground
             div.well
                 div.text-right
                     a.btn.btn-success(href='/campgrounds/' + campground._id + '/comments/new') Add New Comment
