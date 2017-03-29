@@ -2,7 +2,7 @@ include ../partials/header
 
 div.container
     div.row
-        h1(style='text-align: center;')= 'Edit comment for '   
+        h1(style='text-align: center;') Edit comment
         div(style='width: 30%; margin: 30px auto;')
             form(action='/campgrounds/' + campgroundId + '/comments/' + comment._id + '?_method=PUT' method='POST')
                 div.form-group

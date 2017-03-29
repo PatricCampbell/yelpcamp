@@ -21,3 +21,10 @@ html(lang='en')
                                 a(href='#')= 'Signed in as: ' + currentUser.username
                             li
                                 a(href='/logout') Logout
+        div.container
+            if (error && error.length > 0)
+                div.alert.alert-danger
+                    h1= error
+            if (success && success.length > 0)
+                div.alert.alert-success
+                    h1= success

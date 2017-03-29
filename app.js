@@ -1,4 +1,6 @@
+// import modules
 const express        = require('express'),
+      flash          = require('connect-flash'),
       app            = express(),
       bodyParser     = require('body-parser'),
       mongoose       = require('mongoose'),
@@ -22,6 +24,7 @@ app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
+app.use(flash());
 // seed the database
 // seedDB();
 
@@ -40,6 +43,8 @@ passport.deserializeUser(User.deserializeUser());
 // call this on every route
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
 });
 
