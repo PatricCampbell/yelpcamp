@@ -1,6 +1,18 @@
-include partials/header
+doctype htl
+html(lang='en')
+head
+    title YelpCamp
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')    
+    link(rel="stylesheet" href="/stylesheets/landing.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async)
+body
+    div.landing-header
+        h1 Welcome to YelpCamp
+        a(href='/campgrounds').btn.btn-lg.btn-success View All Campgrounds
 
-h1 Landing Page
-p Welcome to YelpCamp
-
-a(href='/campgrounds') View All Campgrounds
+    ul.slideshow
+        li
+        li
+        li
+        li
+        li
