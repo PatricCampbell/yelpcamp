@@ -23,6 +23,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
     let campgroundName = req.body.name;
     let campgroundImage = req.body.image;
     let campgroundDesc = req.body.description;
+    let campgroundPrice = req.body.price;
     let author = {
         id: req.user._id,
         username: req.user.username
@@ -32,7 +33,8 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
         'name': campgroundName,
         'image': campgroundImage,
         'description': campgroundDesc,
-        'author': author
+        'author': author,
+        'price': price
     }
 
     //Create a new campground and save to mongodb

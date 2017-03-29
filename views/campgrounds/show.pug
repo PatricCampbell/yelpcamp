@@ -12,7 +12,7 @@ div.container
             div.thumbnail
                 img.img-responsive(src= campground.image)
                 div.caption-full
-                    h4.pull-right $9.00/night
+                    h4.pull-right= '$' + campground.price + '/night'
                     h4
                         a= campground.name
                     p= campground.description
