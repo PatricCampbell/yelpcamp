@@ -53,4 +53,4 @@ app.use(indexRoutes);
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
 
-app.listen(3000, (req, res) => console.log('YelpCamp is running'));
+app.listen(process.env.port || 3000, (req, res) => console.log('YelpCamp is running'));
