@@ -29,7 +29,6 @@ app.use(flash());
 // seedDB();
 
 // Passport configuration
-// secret = 'My cat is named Pandora'
 app.use(require('express-session')({
     secret: process.env.PASSPORTSECRET,
     resave: false,
