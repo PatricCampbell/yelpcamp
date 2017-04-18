@@ -20,7 +20,8 @@ const campgroundRoutes = require('./routes/campgrounds'),
       indexRoutes      = require('./routes/index');
 
 // mongoose.connect('mongodb://localhost/yelp_camp');
-mongoose.connect('mongodb://patric:tiger69@ds145355.mlab.com:45355/yelpcamp-patriccampbell')
+//mongoose.connect('mongodb://patric:tiger69@ds145355.mlab.com:45355/yelpcamp-patriccampbell');
+mongoose.connect(process.env.DATABASEURL);
 app.set('view engine', 'pug');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/public'));
@@ -30,8 +31,9 @@ app.use(flash());
 // seedDB();
 
 // Passport configuration
+// secret = 'My cat is named Pandora'
 app.use(require('express-session')({
-    secret: 'My cat is named Pandora',
+    secret: process.env.PASSPORTSECRET,
     resave: false,
     saveUninitialized: false
 }));
